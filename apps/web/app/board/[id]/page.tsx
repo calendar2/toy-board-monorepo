@@ -1,43 +1,43 @@
-'use client';
+'use client'
 
-import { useEffect, useState, use } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { fetchAPI } from '@/lib/api';
-import { Board } from '@repo/types';
+import { useEffect, useState, use } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { fetchAPI } from '@/lib/api'
+import { Board } from '@repo/types'
 
 export default function BoardDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const router = useRouter();
+  const router = useRouter()
   // Unwrap params using React.use()
-  const { id } = use(params);
-  
-  const [board, setBoard] = useState<Board | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { id } = use(params)
+
+  const [board, setBoard] = useState<Board | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     fetchAPI(`/board/${id}`)
       .then(setBoard)
       .catch((err) => {
-        console.error('Failed to fetch board:', err);
-        alert('게시글을 불러올 수 없습니다.');
-        router.push('/board');
+        console.error('Failed to fetch board:', err)
+        alert('게시글을 불러올 수 없습니다.')
+        router.push('/board')
       })
-      .finally(() => setLoading(false));
-  }, [id, router]);
+      .finally(() => setLoading(false))
+  }, [id, router])
 
   const handleDelete = async () => {
-    if (!confirm('정말 삭제하시겠습니까?')) return;
+    if (!confirm('정말 삭제하시겠습니까?')) return
     try {
-      await fetchAPI(`/board/${id}`, { method: 'DELETE' });
-      router.push('/board');
+      await fetchAPI(`/board/${id}`, { method: 'DELETE' })
+      router.push('/board')
     } catch (err) {
-      console.error('Failed to delete board:', err);
-      alert('삭제에 실패했습니다.');
+      console.error('Failed to delete board:', err)
+      alert('삭제에 실패했습니다.')
     }
-  };
+  }
 
-  if (loading) return <div className="p-8">Loading...</div>;
-  if (!board) return null;
+  if (loading) return <div className="p-8">Loading...</div>
+  if (!board) return null
 
   return (
     <div className="p-8 max-w-4xl mx-auto">
@@ -70,5 +70,5 @@ export default function BoardDetailPage({ params }: { params: Promise<{ id: stri
         </button>
       </div>
     </div>
-  );
+  )
 }

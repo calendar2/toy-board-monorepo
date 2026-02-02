@@ -19,6 +19,11 @@
   - `Board` 인터페이스와 같은 데이터 모델을 한곳에서 관리하여 단일 진실 공급원(Single Source of Truth)을 확보했습니다.
   - **효과**: 프론트엔드(`apps/web`)와 백엔드(`apps/api`)가 동일한 타입 정의를 공유하므로, 한쪽에서 타입이 변경되면 양쪽 모두에 즉시 반영되어 타입 안전성이 보장됩니다.
 
+### 3. 공통 설정 관리 (Shared Configuration)
+
+- **일관된 코드 스타일**: `packages/eslint-config`와 `packages/prettier-config`를 통해 모노레포 전체에 통일된 린팅(Linting)과 포맷팅(Formatting) 규칙을 적용했습니다.
+- **설정 중복 제거**: 각 앱(`api`, `web`)에서 개별적으로 관리하던 설정을 공통 패키지로 중앙 집중화하여 유지보수의 효율성을 높였습니다.
+
 ## 📂 프로젝트 구조
 
 - **apps/api** (NestJS)
@@ -29,6 +34,10 @@
   - 간단한 `fetch` 래퍼를 통해 API 데이터를 소비합니다.
 - **packages/types**
   - API와 Web 양쪽에서 공통으로 사용하는 TypeScript 타입 정의가 포함되어 있습니다.
+- **packages/eslint-config**
+  - 모노레포 전체에서 공유하는 ESLint 설정입니다. (NestJS용, Next.js용 등 포함)
+- **packages/prettier-config**
+  - 프로젝트 전반에 적용되는 공통 Prettier 설정입니다.
 
 ## 🚀 시작하기 (Getting Started)
 
@@ -49,6 +58,7 @@
     - API는 `http://localhost:3000`에서 실행됩니다.
 
 3.  **프론트엔드 실행 (Web)**
+
     ```bash
     # 터미널 2
     cd apps/web
